@@ -1,0 +1,8 @@
+name: octopart_api
+description: Octopart API
+
+environment:
+  sdk: ">=2.0.0 <3.0.0"
+
+dependencies:
+  dio:
