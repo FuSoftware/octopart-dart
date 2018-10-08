@@ -119,21 +119,45 @@ enum ComplianceDocumentSubtypes {
 class ComplianceDocument extends Asset {
   List<ComplianceDocumentSubtypes> subtypes;
   Attribution attribution;
+
+  ComplianceDocument.fromJson(dynamic oJson) : super.fromJson(oJson) {
+    this.attribution = Attribution.fromJson(oJson['attribution']);
+    int c = oJson['subtypes'].length;
+
+    for(int i=0; i<c; i++){
+      this.subtypes.add(oJson['subtypes'][i]);
+    }
+  }
 }
 
 class Datasheet extends Asset{
   Attribution attribution;
+
+  Datasheet.fromJson(dynamic oJson) : super.fromJson(oJson) {
+    this.attribution = Attribution.fromJson(oJson['attribution']);
+  }
 }
 
 class Description {
   String value;
   Attribution attribution;
+
+  Description.fromJson(dynamic oJson) {
+    this.value = oJson['value'];
+    this.attribution = Attribution.fromJson(oJson['attribution']);
+  }
 }
 
 class ExternalLinks {
   String product_url;
   String freesample_url;
   String evalkit_url;
+
+  ExternalLinks.fromJson(dynamic oJson) {
+    this.product_url = oJson['product_url'];
+    this.freesample_url = oJson['freesample_url'];
+    this.evalkit_url = oJson['evalkit_url'];
+  }
 }
 
 class ImageSet {
@@ -144,12 +168,28 @@ class ImageSet {
   Attribution attribution;
   String credit_string;
   String credit_url;
+
+  ImageSet.fromJson(dynamic oJson) {
+    this.swatch_image = Asset.fromJson(oJson['swatch_image']);
+    this.small_image = Asset.fromJson(oJson['small_image']);
+    this.medium_image = Asset.fromJson(oJson['medium_image']);
+    this.swatch_image = Asset.fromJson(oJson['swatch_image']);
+    this.attribution = Attribution.fromJson(oJson['attribution']);
+    this.credit_string = oJson['credit_string'];
+    this.credit_url = oJson['credit_url'];
+  }
 }
 
 class Manufacturer {
   String uid;
   String name;
   String homepage_url;
+
+  Manufacturer.fromJson(dynamic oJson) {
+    this.uid = oJson['uid'];
+    this.name = oJson['name'];
+    this.homepage_url = oJson['homepage_url'];
+  }
 }
 
 class Part {
@@ -198,6 +238,26 @@ class PartOffer {
   String packaging;
   bool is_authorized;
   DateTime last_updated;
+
+  PartOffer.fromJson(dynamic oJson) {
+    sku = oJson['sku'];
+    seller = Seller.fromJson(oJson['seller']);
+    eligible_region = oJson['eligible_region'];
+    product_url = oJson['product_url'];
+    octopart_rfq_url = oJson['octopart_rfq_url'];
+    Map<String, Map<int, double>> prices;
+    in_stock_quantity = oJson['in_stock_quantity'];
+    on_order_quantity = oJson['on_order_quantity'];
+    on_order_eta = DateTime.parse(oJson['on_order_eta']);
+    factory_lead_days = oJson['factory_lead_days'];
+    factory_order_multiple = oJson['factory_order_multiple'];
+    order_multiple = oJson['order_multiple'];
+    moq = oJson['moq'];
+    multipack_quantity = oJson['multipack_quantity'];
+    packaging = oJson['packaging'];
+    is_authorized = oJson['is_authorized'];
+    last_updated = DateTime.parse(oJson['last_updated']);
+  }
 }
 
 class SpecValue {
