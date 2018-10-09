@@ -384,6 +384,12 @@ class UnitOfMeasurement {
 class PartsMatchRequest {
   List<PartsMatchQuery> queries;
   bool exact_only = false;
+
+  PartsMatchRequest.fromJson(dynamic oJson){
+    this.queries.clear();
+    for(var i=0;i<oJson['queries'].length;i++) this.queries.add(PartsMatchQuery.fromJson(oJson['queries'][i]));
+    exact_only = oJson['exact_only'];
+  }
 }
 
 class PartsMatchQuery {
@@ -396,6 +402,18 @@ class PartsMatchQuery {
   int start = 0;
   int limit = 10;
   String reference;
+
+  PartsMatchQuery.fromJson(dynamic oJson){
+    q = oJson['q'];
+    mpn = oJson['mpn'];
+    brand = oJson['brand'];
+    sku = oJson['sku'];
+    seller = oJson['seller'];
+    mpn_or_sku = oJson['mpn_or_sku'];
+    start = oJson['start'];
+    limit = oJson['limit'];
+    reference = oJson['reference'];
+  }
 
   String get toJson {
     dynamic query;
@@ -418,6 +436,13 @@ class PartsMatchResponse {
   PartsMatchRequest request;
   List<PartsMatchResult> results;
   int msec;
+
+  PartsMatchResponse.fromJson(dynamic oJson){
+    request = PartsMatchRequest.fromJson(oJson['request']);
+    this.results.clear();
+    for(var i=0;i<oJson['results'].length;i++) this.results.add(PartsMatchResult.fromJson(oJson['results'][i]));
+    msec = oJson['msec'];
+  }
 }
 
 class PartsMatchResult {
@@ -425,6 +450,13 @@ class PartsMatchResult {
   int hits;
   String reference;
   String error;
+
+  PartsMatchResult.fromJson(dynamic oJson){
+    for(var i=0;i<oJson['items'].length;i++) this.items.add(Part.fromJson(oJson['items'][i]));
+    hits = oJson['hits'];
+    reference = oJson['reference'];
+    error = oJson['error'];
+  }
 }
 
 class SearchRequest {
@@ -432,6 +464,25 @@ class SearchRequest {
   int start;
   int limit;
   String sortby;
+
+  SearchRequest.fromJson(dynamic oJson){
+    q = oJson['q'];
+    start = oJson['start'];
+    limit = oJson['limit'];
+    sortby = oJson['sortby'];
+  }
+
+  String get toJson {
+    dynamic query;
+
+    if(q.isNotEmpty) query.q = q;
+    if(sortby.isNotEmpty) query.sortby = sortby;
+
+    query.start = start;
+    query.limit = limit;
+
+    return json.encode(query);
+  }
 }
 
 class SearchResponse {
@@ -439,10 +490,21 @@ class SearchResponse {
   List<SearchResult> results;
   int hits;
   int msec;
+
+  SearchResponse.fromJson(dynamic oJson){
+    request = SearchRequest.fromJson(oJson['request']);
+    for(var i=0;i<oJson['results'].length;i++) this.results.add(SearchResult.fromJson(oJson['results'][i]));
+    hits = oJson['hits'];
+    msec = oJson['msec'];
+  }
 }
 
 class SearchResult {
   Brand item;
+
+  SearchResult.fromJson(dynamic oJson){
+    item = Brand.fromJson(oJson['item']);
+  }
 }
 
 class API {
