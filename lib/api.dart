@@ -415,20 +415,24 @@ class PartsMatchQuery {
     reference = oJson['reference'];
   }
 
-  String get toJson {
-    dynamic query;
+  String get jsonString{
+    return json.encode(this.toJson());
+  }
 
-    if(q.isNotEmpty) query.q = q;
-    if(mpn.isNotEmpty) query.mpn = mpn;
-    if(brand.isNotEmpty) query.brand = brand;
-    if(sku.isNotEmpty) query.sku = sku;
-    if(seller.isNotEmpty) query.seller = seller;
-    if(mpn_or_sku.isNotEmpty) query.mpn_or_sku = mpn_or_sku;
+  Map toJson() {
+    Map map = new Map();
 
-    query.start = start;
-    query.limit = limit;
+    if(q.isNotEmpty) map['q'] = q;
+    if(mpn.isNotEmpty) map['mpn'] = mpn;
+    if(brand.isNotEmpty) map['brand'] = brand;
+    if(sku.isNotEmpty) map['sku'] = sku;
+    if(seller.isNotEmpty) map['seller'] = seller;
+    if(mpn_or_sku.isNotEmpty) map['mpn_or_sku'] = mpn_or_sku;
+    map['start'] = start;
+    map['limit'] = limit;
+    if(reference.isNotEmpty) map['reference'] = reference;
 
-    return json.encode(query);
+    return map;
   }
 }
 
